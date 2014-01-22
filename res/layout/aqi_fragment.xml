@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ptr_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/weather" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+			<TextView 
+			    android:id="@+id/city"
+			    android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/city_textsize"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/aqi_textmargin"/>
+            <TextSwitcher
+                android:id="@+id/aqi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/city" 
+                android:layout_below="@id/city"
+                android:layout_margin="@dimen/aqi_textmargin" 
+                />
+            <TextView
+                android:id="@+id/catagory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/aqi"
+                android:layout_margin="@dimen/aqi_textmargin"
+                android:padding="5dp"
+                android:layout_toRightOf="@id/aqi"
+                android:textSize="@dimen/catagory_textsize"
+                android:visibility="invisible"/>
+            
+            <ImageView 
+                android:id="@+id/emotion"
+                android:layout_width="150dip"
+                android:layout_height="150dip"
+                android:layout_below="@id/aqi"
+                android:layout_alignParentRight="true"
+                android:scaleType="centerInside"
+                android:visibility="gone"/>
+        </RelativeLayout>
+        
+    </ScrollView>
+
+</uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
