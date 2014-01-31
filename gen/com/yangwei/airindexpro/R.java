@@ -303,11 +303,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int aqi_textsize=0x7f070006;
         public static final int catagory_textsize=0x7f070008;
         public static final int city_textsize=0x7f070005;
+        public static final int emotion_picmargin=0x7f070009;
         public static final int ptr_progress_bar_stroke_width=0x7f070002;
-        public static final int shadow_width=0x7f07000a;
+        public static final int shadow_width=0x7f07000b;
         /**  sliding menu parameter 
          */
-        public static final int slidingmenu_offset=0x7f070009;
+        public static final int slidingmenu_offset=0x7f07000a;
         public static final int spb_default_stroke_separator_length=0x7f070000;
         public static final int spb_default_stroke_width=0x7f070001;
     }
@@ -323,16 +324,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int weather=0x7f020008;
     }
     public static final class id {
-        public static final int action_settings=0x7f050017;
-        public static final int aqi=0x7f050012;
-        public static final int catagory=0x7f050013;
+        public static final int action_settings=0x7f050018;
+        public static final int aqi=0x7f050013;
+        public static final int aqi_row=0x7f050012;
+        public static final int catagory=0x7f050014;
         public static final int city=0x7f050011;
-        public static final int emotion=0x7f050014;
+        public static final int emotion=0x7f050015;
         public static final int fullscreen=0x7f050003;
         public static final int inside=0x7f050009;
         public static final int left=0x7f050000;
         public static final int margin=0x7f050002;
-        public static final int menu_frame=0x7f050015;
+        public static final int menu_frame=0x7f050016;
         public static final int outside=0x7f05000a;
         public static final int pager=0x7f05000e;
         public static final int ptr_content=0x7f05000b;
@@ -342,7 +344,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int right=0x7f050001;
         public static final int scrollview=0x7f050010;
         public static final int selected_view=0x7f050004;
-        public static final int slidingmenumain=0x7f050016;
+        public static final int slidingmenumain=0x7f050017;
         public static final int spb_interpolator_accelerate=0x7f050005;
         public static final int spb_interpolator_acceleratedecelerate=0x7f050007;
         public static final int spb_interpolator_decelerate=0x7f050008;

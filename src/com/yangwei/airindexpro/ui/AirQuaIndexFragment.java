@@ -44,12 +44,11 @@ public abstract class AirQuaIndexFragment extends Fragment implements ViewFactor
 	protected TextView mCategoryView;
 	protected int tab_position;
 	final Handler handler = new Handler();
-	LinkedList<CityAirQualityIndex> CAQData = null;
+	CityAirQualityIndex averageAQI;
 	
 	protected DataReadyListener<LinkedList<CityAirQualityIndex>> mDataReadyListener = new DataReadyListener<LinkedList<CityAirQualityIndex>>() {
 		@Override
 		public void dataReady(LinkedList<CityAirQualityIndex> data) {
-			CAQData = data;
 			if (data == null) {
 				mSwitcher.setText(getResources().getText(R.string.nonetwork));
 				mPullToRefreshLayout.setRefreshComplete();
@@ -60,59 +59,9 @@ public abstract class AirQuaIndexFragment extends Fragment implements ViewFactor
 				mPullToRefreshLayout.setRefreshComplete();
 				return;
 			}
-			CityAirQualityIndex averageAQI = data.peekLast();
+			averageAQI = data.peekLast();
 			final int limit = averageAQI.getAqi();
-			mCityName.setText(averageAQI.getArea());
-			
-			Thread t = new Thread(){
-				int i;
-				public void run() {
-					for (i = 0; i < limit; i++) {
-						handler.post(new Runnable() {
-							
-							@Override
-							public void run() {
-								mSwitcher.setText(String.valueOf(i));
-							}
-						});
-						int max_sleepTime = 50;
-						int sleep_time;
-						AccelerateInterpolator interpolator = new AccelerateInterpolator();
-						float interpolation_value = interpolator.getInterpolation((float)i/(float)limit);
-						sleep_time = (int) ((1-interpolation_value)*max_sleepTime);
-						try {
-							Thread.sleep(sleep_time);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					handler.post(new Runnable() {
-						
-						@Override
-						public void run() {
-							mCategoryView.setBackgroundColor(AQIImageManager.getInstance(getActivity()).atAQI(limit).getCategoryColor());
-							mCategoryView.setText(AQIImageManager.getInstance(getActivity()).atAQI(limit).getCategoryText());
-							Animation animation = new AlphaAnimation(0, 1);
-							animation.setDuration(1000);
-							mCategoryView.startAnimation(animation);
-							mCategoryView.setVisibility(View.VISIBLE);
-						}
-					});
-					handler.post(new Runnable() {
-						
-						@Override
-						public void run() {
-							Animation animation = new AlphaAnimation(0, 1);
-							animation.setDuration(1000);
-							mEmotionView.setImageResource(AQIImageManager.getInstance(getActivity()).atAQI(limit).getBaoImage());
-							mEmotionView.startAnimation(animation);
-							mEmotionView.setVisibility(View.VISIBLE);
-						}
-					});
-					
-				}
-			};
-			t.start();
+			updateUI(limit, averageAQI.getArea());
 			
 			mPullToRefreshLayout.setRefreshComplete();
 		}
@@ -123,13 +72,16 @@ public abstract class AirQuaIndexFragment extends Fragment implements ViewFactor
 		if (BuildConfig.DEBUG) {
 			Log.d(TAG, ">>>>>>>>onCreate, position:" + tab_position);
 		}
-		dataSource = new LocalDataSource();
+		dataSource = new RemoteDataSource(getActivity());
 		super.onCreate(savedInstanceState);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		if (BuildConfig.DEBUG) {
+			Log.d(TAG, ">>>>>>>>onCreateView, position:" + tab_position);
+		}
 		Bundle arg = getArguments();
         if(arg != null)
         	tab_position = arg.getInt("tab_position");
@@ -158,9 +110,9 @@ public abstract class AirQuaIndexFragment extends Fragment implements ViewFactor
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
         if (BuildConfig.DEBUG) {
-			Log.d(TAG, ">>>>>>>>onActivityCreated, position:" + tab_position);
+			Log.d(TAG, ">>>>>>>>onActivityCreated, position:" + tab_position + " bundle: " + savedInstanceState);
 		}
-        inActivityCreated();
+        inActivityCreated(savedInstanceState);
 		super.onActivityCreated(savedInstanceState);
 	}
 	@Override
@@ -183,13 +135,61 @@ public abstract class AirQuaIndexFragment extends Fragment implements ViewFactor
 		//dataSource.getData(mDataReadyListener);
 	}
 	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		System.out.println(">>>>>>onSaveInstanceState, position: " + tab_position);
-		super.onSaveInstanceState(outState);
-        outState.putInt("curChoice", mCurCheckPosition);
-	};
+//	@Override
+//	public void onSaveInstanceState(Bundle outState) {
+//		if (BuildConfig.DEBUG) {
+//			Log.d(TAG, ">>>>>>onSaveInstanceState, postion: " + tab_position);
+//		}
+//		super.onSaveInstanceState(outState);
+//		if (averageAQI != null) {
+//			outState.putString("city", averageAQI.getArea());
+//	        outState.putInt("AQI", averageAQI.getAqi());
+//		}
+//	};
 	
-	abstract void inActivityCreated();
+	abstract void inActivityCreated(Bundle savedInstanceState);
 	abstract void getData();
+
+	protected void updateUI(final int limit, String city) {
+		mCityName.setText(city);
+		
+		Thread t = new Thread(){
+			
+			public void run() {
+				handler.post(new Runnable() {
+
+					@Override
+					public void run() {
+						mSwitcher.setText(String.valueOf(limit));
+					}
+				});
+					
+				handler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						mCategoryView.setBackgroundColor(AQIImageManager.getInstance(getActivity()).atAQI(limit).getCategoryColor());
+						mCategoryView.setText(AQIImageManager.getInstance(getActivity()).atAQI(limit).getCategoryText());
+						Animation animation = new AlphaAnimation(0, 1);
+						animation.setDuration(1000);
+						mCategoryView.startAnimation(animation);
+						mCategoryView.setVisibility(View.VISIBLE);
+					}
+				});
+				handler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						Animation animation = new AlphaAnimation(0, 1);
+						animation.setDuration(1000);
+						mEmotionView.setImageResource(AQIImageManager.getInstance(getActivity()).atAQI(limit).getBaoImage());
+						mEmotionView.startAnimation(animation);
+						mEmotionView.setVisibility(View.VISIBLE);
+					}
+				});
+				
+			}
+		};
+		t.start();
+	}
 }

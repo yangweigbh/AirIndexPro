@@ -81,6 +81,7 @@ public class RemoteDataSource implements IDataSource<CityAirQualityIndex>{
 				if (BuildConfig.DEBUG) {
 					Log.d(TAG, "onLoadFinished");
 				}
+				((Activity)mContext).getLoaderManager().destroyLoader(Constant.remote_data_loader_id);
 				mListener.dataReady(arg1);
 				
 			}

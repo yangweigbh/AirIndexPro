@@ -7,6 +7,7 @@
     <dimen name="aqi_textsize">50dp</dimen>
 	<dimen name="aqi_textmargin">5dp</dimen>
 	<dimen name="catagory_textsize">15dp</dimen>
+	<dimen name="emotion_picmargin">5dp</dimen>
 	
 	<!-- sliding menu parameter -->
 	<dimen name="slidingmenu_offset">60dp</dimen>

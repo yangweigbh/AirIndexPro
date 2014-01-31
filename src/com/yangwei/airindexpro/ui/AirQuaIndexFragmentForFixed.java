@@ -25,18 +25,21 @@ public class AirQuaIndexFragmentForFixed extends AirQuaIndexFragment {
 	}
 
 	@Override
-	void inActivityCreated() {
-		Bundle arg = getArguments();
-		if(arg != null) {
-			dataSource.setCity(arg.getString("city"));
-			if (BuildConfig.DEBUG) {
-				Log.d(TAG, ">>>>>>>>tab_position: " + tab_position + " for: " + arg.getString("city"));
-			}
-		}
-			
-		Toast.makeText(getActivity(), "refresh has started", Toast.LENGTH_LONG).show();
-		//mPullToRefreshLayout.setRefreshing(true);
-		dataSource.getData(mDataReadyListener);
+	void inActivityCreated(Bundle savedInstanceState) {
+		getData();
+//		Bundle arg = getArguments();
+//		if (arg != null) {
+//			dataSource.setCity(arg.getString("city"));
+//			if (BuildConfig.DEBUG) {
+//				Log.d(TAG, ">>>>>>>>tab_position: " + tab_position
+//						+ " for: " + arg.getString("city"));
+//			}
+//			Toast.makeText(getActivity(), "refresh has started",
+//					Toast.LENGTH_LONG).show();
+//			//mPullToRefreshLayout.setRefreshing(true);
+//			dataSource.getData(mDataReadyListener);
+//		}	
+		
 	}
 
 }

@@ -32,6 +32,7 @@ public class LocationToAddressConverter {
 				if (BuildConfig.DEBUG) {
 					Log.d(TAG, "onLoadFinished");
 				}
+				((Activity)context).getLoaderManager().destroyLoader(Constant.coordinate_reverse_loader_id);
 				callback.finished(arg1);
 				
 			}

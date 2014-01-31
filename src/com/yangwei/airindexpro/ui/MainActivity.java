@@ -130,10 +130,13 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 					Iterator<String> iterator = newValueSet.iterator();
 					while (iterator.hasNext()) {
 						String city = (String) iterator.next();
+						System.out.println(">>>>new value city:" + city);
 						Bundle b =  new Bundle();
 						b.putString("city", city);
 						mFragmentTabPager.addTab(getActionBar().newTab(), AirQuaIndexFragmentForFixed.class, b);
 					}
+					mFragmentTabPager.setUpdateNeeded(true);
+					mFragmentTabPager.notifyDataSetChanged();
 				}
 				return true;
 			}

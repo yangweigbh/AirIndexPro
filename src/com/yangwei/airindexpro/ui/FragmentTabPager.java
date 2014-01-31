@@ -26,9 +26,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
 
-class FragmentTabPager extends FragmentPagerAdapter
+class FragmentTabPager extends FragmentStatePagerAdapter
         implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
 
     private final Context mContext;
@@ -46,6 +49,8 @@ class FragmentTabPager extends FragmentPagerAdapter
             args = _args;
         }
     }
+    
+    private boolean updateNeeded = false;
 
     FragmentTabPager(FragmentActivity activity, ViewPager pager) {
         super(activity.getSupportFragmentManager());
@@ -63,14 +68,14 @@ class FragmentTabPager extends FragmentPagerAdapter
         tab.setText(args.getString("city"));
         mActionBar.addTab(tab);
         mTabs.add(info);
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
     
     void removeTab(int position) {
     	mActionBar.removeTabAt(position);
     	framents.remove(mTabs.get(position).args.getString("city"));
     	mTabs.remove(position);
-    	notifyDataSetChanged();
+    	//notifyDataSetChanged();
     }
 
     @Override
@@ -80,8 +85,11 @@ class FragmentTabPager extends FragmentPagerAdapter
 
     @Override
     public Fragment getItem(int position) {
+    	System.out.println(">>>>>getItem called, postion: " + position);
+        
         TabInfo info = mTabs.get(position);
         info.args.putInt("tab_position", position);
+        System.out.println(">>>>>info.args.city:" + info.args.getString("city") + "info.clss: " + info.clss);
         if (framents.get(info.args.getString("city")) == null) {
         	framents.put(info.args.getString("city"), Fragment.instantiate(mContext, info.clss.getName(), info.args));
 		} 
@@ -125,9 +133,25 @@ class FragmentTabPager extends FragmentPagerAdapter
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
         // NO-OP
     }
-
+    
     @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
+    public int getItemPosition(Object object) {
+    	System.out.println(">>>>>>>>getItemPosition called : " + object);
+    	if (updateNeeded) {
+    		return PagerAdapter.POSITION_NONE;
+		} else {
+			return PagerAdapter.POSITION_UNCHANGED;
+		}
+    	
     }
+    
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+    	System.out.println(">>>>>>>>destroyItem called : " + position);
+    	super.destroyItem(container, position, object);
+    }
+
+	public void setUpdateNeeded(boolean updateNeeded) {
+		this.updateNeeded = updateNeeded;
+	}
 }

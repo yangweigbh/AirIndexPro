@@ -50,7 +50,6 @@ public class CoordinateReverseLoader extends AsyncTaskLoader<Address> {
 			HttpGet httpRequest = new HttpGet(uri);
 			String jsonContent = client.execute(httpRequest, new BasicResponseHandler());
 			try {
-				System.out.println("content: " + jsonContent);
 				JSONObject object = new JSONObject(jsonContent);
 				if (object.getString("status").equals("ok")) {
 					JSONObject data = object.getJSONObject("response").getJSONArray("data").getJSONObject(0);
@@ -60,7 +59,6 @@ public class CoordinateReverseLoader extends AsyncTaskLoader<Address> {
 				e.printStackTrace();
 				try {
 					JSONObject error = new JSONObject(jsonContent);
-					Log.d(TAG, error.getString("error"));
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}

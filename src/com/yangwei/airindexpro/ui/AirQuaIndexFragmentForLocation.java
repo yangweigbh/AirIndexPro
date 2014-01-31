@@ -6,6 +6,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.yangwei.airindexpro.R;
@@ -92,7 +93,7 @@ public class AirQuaIndexFragmentForLocation extends AirQuaIndexFragment {
 				
 				@Override
 				public void finished(Address address) {
-					System.out.println("city: " + address.getCity());
+					Toast.makeText(getActivity(), "city: " + address.getCity(), Toast.LENGTH_LONG).show();
 					if (((MainActivity)getActivity()).getValidCity() != null) {
 						if (((MainActivity)getActivity()).getValidCity().contains(address.getCity())) {
 							dataSource.setCity(address.getCity());
@@ -100,6 +101,7 @@ public class AirQuaIndexFragmentForLocation extends AirQuaIndexFragment {
 							dataSource.getData(mDataReadyListener);
 						} else {
 							Toast.makeText(getActivity(), getResources().getText(R.string.location_not_support), Toast.LENGTH_LONG).show();
+							mPullToRefreshLayout.setRefreshComplete();
 						}
 					} else {
 						Toast.makeText(getActivity(), "valid city null", Toast.LENGTH_LONG).show();
@@ -116,7 +118,8 @@ public class AirQuaIndexFragmentForLocation extends AirQuaIndexFragment {
 	@Override
 	void getData() {
 		getActivity().getActionBar().getTabAt(tab_position).setText(getResources().getString(R.string.city_get_by_gps));
-		// dataSource.getData(mDataReadyListener);
+		mCategoryView.setVisibility(View.INVISIBLE);
+		mEmotionView.setVisibility(View.INVISIBLE);
 		// Acquire a reference to the system Location Manager
 		final LocationManager locationManager = (LocationManager) getActivity()
 				.getSystemService(Context.LOCATION_SERVICE);
@@ -149,7 +152,7 @@ public class AirQuaIndexFragmentForLocation extends AirQuaIndexFragment {
 	}
 	
 	@Override
-	void inActivityCreated() {
+	void inActivityCreated(Bundle savedInstanceState) {
 		getDataForTheFirstTime();
 	}
 
