@@ -11,19 +11,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.yangwei.airindexpro.BuildConfig;
+import com.yangwei.airindexpro.R;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.net.http.AndroidHttpClient;
 import android.util.Log;
+import android.widget.Toast;
 
 public class ValidCityLoader extends AsyncTaskLoader<ArrayList<String>> {
 	
 	private static final String TAG = "ValidCityLoader";
+	private Context context;
 
 	public ValidCityLoader(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
+		this.context = context;
 	}
 	
 	@Override protected void onStartLoading() {
@@ -48,7 +51,6 @@ public class ValidCityLoader extends AsyncTaskLoader<ArrayList<String>> {
 			HttpGet httpRequest = new HttpGet(uri);
 			String jsonContent = client.execute(httpRequest, new BasicResponseHandler());
 			try {
-				System.out.println("content: " + jsonContent);
 				JSONObject object = new JSONObject(jsonContent);
 				JSONArray cityarray = object.getJSONArray("cities");
 				for (int i = 0; i < cityarray.length(); i++) {
@@ -66,6 +68,7 @@ public class ValidCityLoader extends AsyncTaskLoader<ArrayList<String>> {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			Toast.makeText(context, R.string.error, Toast.LENGTH_LONG).show();
 		} finally {
 			if (client != null) {
 				((AndroidHttpClient)client).close();

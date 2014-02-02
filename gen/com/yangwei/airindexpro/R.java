@@ -370,6 +370,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int app_name=0x7f090004;
         public static final int city_get_by_gps=0x7f090011;
         public static final int citylist=0x7f09000e;
+        public static final int error=0x7f090013;
         public static final int good=0x7f090006;
         public static final int hazardous=0x7f09000b;
         public static final int location_not_support=0x7f09000d;

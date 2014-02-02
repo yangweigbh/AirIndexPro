@@ -1,13 +1,8 @@
 package com.yangwei.airindexpro.util;
 
 import com.yangwei.airindexpro.R;
-
-import android.R.integer;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 public class AQIImageManager {
 	private static AQIImageManager mInstance;

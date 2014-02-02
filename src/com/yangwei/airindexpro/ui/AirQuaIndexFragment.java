@@ -129,23 +129,8 @@ public abstract class AirQuaIndexFragment extends Fragment implements ViewFactor
 			Log.d(TAG, ">>>>>onRefreshStarted");
 		}
 		Toast.makeText(getActivity(), "refresh has started", Toast.LENGTH_LONG).show();
-		//mCategoryView.setVisibility(View.INVISIBLE);
-		//mEmotionView.setVisibility(View.INVISIBLE);
 		getData();
-		//dataSource.getData(mDataReadyListener);
 	}
-	
-//	@Override
-//	public void onSaveInstanceState(Bundle outState) {
-//		if (BuildConfig.DEBUG) {
-//			Log.d(TAG, ">>>>>>onSaveInstanceState, postion: " + tab_position);
-//		}
-//		super.onSaveInstanceState(outState);
-//		if (averageAQI != null) {
-//			outState.putString("city", averageAQI.getArea());
-//	        outState.putInt("AQI", averageAQI.getAqi());
-//		}
-//	};
 	
 	abstract void inActivityCreated(Bundle savedInstanceState);
 	abstract void getData();

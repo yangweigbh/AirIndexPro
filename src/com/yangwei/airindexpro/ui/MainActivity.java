@@ -20,6 +20,7 @@ import android.view.Menu;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.yangwei.airindexpro.R;
+import com.yangwei.airindexpro.quadtree.QuadTree;
 import com.yangwei.airindexpro.ui.PreferenceListFragment.OnPreferenceAttachedListener;
 import com.yangwei.airindexpro.util.Constant;
 
@@ -31,6 +32,7 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 	private List<String> validCity;
 	private SharedPreferences preferences;
 	private PreferenceListFragment sidebar_menu;
+	private QuadTree tree;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +50,9 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 		setValidCity(Arrays.asList(Constant.valid_city_array));
 		
 		setupView();
-		
-		
 	}
 
 	private void setupView() {
-		// ViewPager and its adapters use support library
-		// fragments, so use getSupportFragmentManager.
 		ViewPager vp = (ViewPager) findViewById(R.id.pager);
 		mFragmentTabPager = new FragmentTabPager(this, vp);
 		
@@ -87,12 +85,10 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 		sidebar_menu = PreferenceListFragment.newInstance(R.xml.sidebar_menu);
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.menu_frame, sidebar_menu).commit();
-		//mFragmentTabPager.addTab(actionBar.newTab(), ListFragment1.class, null);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -103,6 +99,16 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 
 	public void setValidCity(List<String> validCity) {
 		this.validCity = validCity;
+	}
+	
+	public QuadTree getQuadTree() {
+		if (tree == null) {
+			tree = new QuadTree(20, 50, 80, 150);
+			for (int i = 0; i < Constant.valid_city_cor_array.length; i++) {
+				tree.set(Constant.valid_city_cor_array[i].getX(), Constant.valid_city_cor_array[i].getY(), Constant.valid_city_cor_array[i].getValue());
+			}
+		}
+		return tree; 
 	}
 
 	@Override
@@ -119,6 +125,14 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 				Set<String> newValueSet = (Set<String>)newValue;
 				if (newValueSet.size() == 0) {
 					preference.setSummary(R.string.no_city_select);
+					int tabCount = getActionBar().getTabCount();
+					if (tabCount > 1) {
+						for (int i = tabCount - 1; i > 0; i--) {
+							mFragmentTabPager.removeTab(i);
+						}
+						mFragmentTabPager.setUpdateNeeded(true);
+						mFragmentTabPager.notifyDataSetChanged();
+					}
 				} else {
 					preference.setSummary(newValueSet.toString());
 					int tabCount = getActionBar().getTabCount();
@@ -130,7 +144,6 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 					Iterator<String> iterator = newValueSet.iterator();
 					while (iterator.hasNext()) {
 						String city = (String) iterator.next();
-						System.out.println(">>>>new value city:" + city);
 						Bundle b =  new Bundle();
 						b.putString("city", city);
 						mFragmentTabPager.addTab(getActionBar().newTab(), AirQuaIndexFragmentForFixed.class, b);

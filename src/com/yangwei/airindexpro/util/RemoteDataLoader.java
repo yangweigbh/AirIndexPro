@@ -16,8 +16,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.http.AndroidHttpClient;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.yangwei.airindexpro.BuildConfig;
+import com.yangwei.airindexpro.R;
 import com.yangwei.airindexpro.datasource.CityAirQualityIndex;
 
 public class RemoteDataLoader extends AsyncTaskLoader<LinkedList<CityAirQualityIndex>> {
@@ -94,6 +96,7 @@ public class RemoteDataLoader extends AsyncTaskLoader<LinkedList<CityAirQualityI
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			Toast.makeText(context, R.string.error, Toast.LENGTH_LONG).show();
 		} finally {
 			if (client != null) {
 				((AndroidHttpClient)client).close();
