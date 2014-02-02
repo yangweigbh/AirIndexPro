@@ -128,7 +128,6 @@ public abstract class AirQuaIndexFragment extends Fragment implements ViewFactor
 		if (BuildConfig.DEBUG) {
 			Log.d(TAG, ">>>>>onRefreshStarted");
 		}
-		Toast.makeText(getActivity(), "refresh has started", Toast.LENGTH_LONG).show();
 		getData();
 	}
 	

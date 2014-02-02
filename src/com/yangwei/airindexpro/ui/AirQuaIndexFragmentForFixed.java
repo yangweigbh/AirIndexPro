@@ -19,7 +19,6 @@ public class AirQuaIndexFragmentForFixed extends AirQuaIndexFragment {
 			dataSource.setCity(arg.getString("city"));
 		}
 		dataSource.getData(mDataReadyListener);	
-		Toast.makeText(getActivity(), "refresh has started", Toast.LENGTH_LONG).show();
 		mCategoryView.setVisibility(View.INVISIBLE);
 		mEmotionView.setVisibility(View.INVISIBLE);
 	}

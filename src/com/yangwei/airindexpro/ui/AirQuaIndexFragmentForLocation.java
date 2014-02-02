@@ -21,12 +21,10 @@ public class AirQuaIndexFragmentForLocation extends AirQuaIndexFragment {
 
 	private void makeUseOfNewLocation(final Location location) {
 		if (location != null) {
-			Toast.makeText(getActivity(), "location get: " + location.getLatitude() + " : " + location.getLongitude(), Toast.LENGTH_LONG).show();
 			LocationToAddressConverter.LocationToAddress(getActivity(), location, new LocationToAddressConverter.CallBack() {
 				
 				@Override
 				public void finished(Address address) {
-					Toast.makeText(getActivity(), "city: " + address.getCity(), Toast.LENGTH_LONG).show();
 					if (((MainActivity)getActivity()).getValidCity() != null) {
 						if (((MainActivity)getActivity()).getValidCity().contains(address.getCity())) {
 							dataSource.setCity(address.getCity());
