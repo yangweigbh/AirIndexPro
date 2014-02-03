@@ -9,6 +9,11 @@
                 android:summary="summary"
 		    	android:entries="@array/valid_city"
 		    	android:entryValues="@array/valid_city"/>
+		<PreferenceScreen
+		    	android:key="feedback"
+                android:title="@string/feedback"
+                android:summary="@string/summary_feedback">
+        </PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>

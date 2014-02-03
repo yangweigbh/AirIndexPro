@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +20,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
 import com.yangwei.airindexpro.R;
 import com.yangwei.airindexpro.quadtree.QuadTree;
 import com.yangwei.airindexpro.ui.PreferenceListFragment.OnPreferenceAttachedListener;
@@ -48,6 +51,9 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 								.asList(Constant.valid_city_array))).commit();
 		
 		setValidCity(Arrays.asList(Constant.valid_city_array));
+		
+		//Umeng app analytics
+		MobclickAgent.updateOnlineConfig(this);
 		
 		setupView();
 	}
@@ -86,6 +92,18 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.menu_frame, sidebar_menu).commit();
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,6 +136,7 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 		if (user_cities != null && user_cities.size() != 0) {
 			mslistpreference.setSummary(user_cities.toString());
 		}
+		
 		mslistpreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			
 			@Override
@@ -151,6 +170,18 @@ public class MainActivity extends FragmentActivity implements OnPreferenceAttach
 					mFragmentTabPager.setUpdateNeeded(true);
 					mFragmentTabPager.notifyDataSetChanged();
 				}
+				return true;
+			}
+		});
+		
+		//Feedback button
+		PreferenceScreen feedback = (PreferenceScreen) root.findPreference("feedback");
+		feedback.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				FeedbackAgent agent = new FeedbackAgent(MainActivity.this);
+			    agent.startFeedbackActivity();
 				return true;
 			}
 		});

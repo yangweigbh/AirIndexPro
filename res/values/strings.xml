@@ -17,6 +17,8 @@
 	<string name="city_get_by_gps">定位城市</string>
 	<string name="nonetwork">没有网络连接</string>
 	<string name="error">出错啦，请稍后再试</string>
+	<string name="feedback">反馈</string>
+	<string name="summary_feedback">我们很重视您的反馈</string>
 	
 	
 	<string-array name="valid_city">

@@ -13,5 +13,6 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/w21yang/workspace/AirIndexPro/libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/w21yang/workspace/AirIndexPro/libs/umeng_sdk.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

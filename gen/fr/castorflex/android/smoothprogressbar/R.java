@@ -8,24 +8,24 @@ package fr.castorflex.android.smoothprogressbar;
 
 public final class R {
 	public static final class id {
-		public static final int spb_interpolator_acceleratedecelerate = 0x7f050007;
-		public static final int spb_interpolator_linear = 0x7f050006;
-		public static final int spb_interpolator_accelerate = 0x7f050005;
-		public static final int spb_interpolator_decelerate = 0x7f050008;
+		public static final int spb_interpolator_acceleratedecelerate = 0x7f060007;
+		public static final int spb_interpolator_linear = 0x7f060006;
+		public static final int spb_interpolator_accelerate = 0x7f060005;
+		public static final int spb_interpolator_decelerate = 0x7f060008;
 	}
 	public static final class style {
-		public static final int SmoothProgressBar = 0x7f0b0001;
-		public static final int Theme_SmoothProgressBarDefaults = 0x7f0b0000;
+		public static final int SmoothProgressBar = 0x7f0c0001;
+		public static final int Theme_SmoothProgressBarDefaults = 0x7f0c0000;
 	}
 	public static final class integer {
-		public static final int spb_default_sections_count = 0x7f080000;
-		public static final int spb_default_interpolator = 0x7f080001;
+		public static final int spb_default_sections_count = 0x7f090000;
+		public static final int spb_default_interpolator = 0x7f090001;
 	}
 	public static final class color {
-		public static final int spb_default_color = 0x7f060000;
+		public static final int spb_default_color = 0x7f070000;
 	}
 	public static final class string {
-		public static final int spb_default_speed = 0x7f090000;
+		public static final int spb_default_speed = 0x7f0a0000;
 	}
 	public static final class styleable {
 		public static final int SmoothProgressBar_spb_colors = 9;
@@ -53,11 +53,11 @@ public final class R {
 		public static final int spb_stroke_width = 0x7f010010;
 	}
 	public static final class bool {
-		public static final int spb_default_reversed = 0x7f0a0000;
-		public static final int spb_default_mirror_mode = 0x7f0a0001;
+		public static final int spb_default_reversed = 0x7f0b0000;
+		public static final int spb_default_mirror_mode = 0x7f0b0001;
 	}
 	public static final class dimen {
-		public static final int spb_default_stroke_width = 0x7f070001;
-		public static final int spb_default_stroke_separator_length = 0x7f070000;
+		public static final int spb_default_stroke_width = 0x7f080001;
+		public static final int spb_default_stroke_separator_length = 0x7f080000;
 	}
 }
