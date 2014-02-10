@@ -17,7 +17,7 @@ import com.yangwei.airindexpro.util.LocationToAddressConverter;
 
 public class AirQuaIndexFragmentForLocation extends AirQuaIndexFragment {
 	
-	String gpsType = LocationManager.GPS_PROVIDER;
+	String gpsType = LocationManager.NETWORK_PROVIDER;
 
 	private void makeUseOfNewLocation(final Location location) {
 		if (location != null) {

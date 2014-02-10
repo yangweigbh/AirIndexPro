@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">AirIndexPro</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
     <string name="good">良好</string>
 	<string name="moderate">中等</string>
 	<string name="unhealthyforsensitivegroups">对敏感人群有害</string>
